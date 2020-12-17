@@ -1,0 +1,19 @@
+version: '2'
+services:
+  server:
+    image: nginx:stable
+    container_name: nginx
+    restart: unless-stopped
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:zyrox-tech.site"
+      - "traefik.docker.network=web"
+    environment:
+      - NODE_ENV=production
+      - url=https://zyrox-tech.site
+
+networks:
+  web:
+    external: true

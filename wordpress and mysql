@@ -1,0 +1,35 @@
+
+version: '3.3'
+services:
+   db:
+     container_name: mysql
+     image: mysql:5.7
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: somewordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+     networks:
+     - web
+
+   wordpress:
+     depends_on:
+       - db
+     container_name: wordpress
+     image: wordpress:latest
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+     networks:
+     - web
+     labels:
+      - "traefik.docker.network=web"
+      - "traefik.backend=zyrox"
+      - "traefik.frontend.rule=Host:zyrox-tech.fr"
+
+networks:
+  web:
+    external: true
