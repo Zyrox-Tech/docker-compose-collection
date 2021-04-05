@@ -1,3 +1,0 @@
-ajouter du stockages wordpress avec docker :
-
-docker container exec -it idduconteneur bash -c "echo 'php_value upload_max_filesize 256M' > '/var/www/html/.htaccess'"
